@@ -40,4 +40,3 @@ def minOperations(n):
 n = 9
 result = minOperations(n)
 print(f"Number of operations for n={n}: {result}")
-
