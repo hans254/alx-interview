@@ -2,7 +2,6 @@
 """
 Function that calculates the min operations to copy and paste letters
 """
-
 def minOperations(n):
     if n == 1:
         return 0
@@ -35,8 +34,6 @@ def minOperations(n):
             n //= divisor
 
     return operations
-
-# Example usage
 n = 9
 result = minOperations(n)
 print(f"Number of operations for n={n}: {result}")
