@@ -1,58 +1,42 @@
 #!/usr/bin/python3
-""" prime game"""
+"""0. Prime Game - Maria and Ben are playing a game"""
 
 
 def isWinner(x, nums):
-    """ returns the winner of the primegame"""
-    mariaWins = 0
-    benWins = 0
-    Round = 0
-    while (Round < x):
-        winner = playPrime(nums[Round])
-        if winner == 'Ben':
-            benWins += 1
-        if winner == 'Maria':
-            mariaWins += 1
-        Round += 1
-    if benWins > mariaWins:
-        return 'Ben'
-    if benWins < mariaWins:
-        return 'Maria'
-    else:
+    """x - rounds
+    nums - numbers list
+    """
+    if x <= 0 or nums is None:
+        return None
+    if x != len(nums):
         return None
 
+    ben = 0
+    maria = 0
 
-# play primegame
-def playPrime(n):
-    """ initiates play"""
-    turn = 0
-    nums = []
-    if n == 1:
-        return 'Ben'
-    for i in range(1, n + 1):
-        nums.append(i)
-    for j in nums[:]:
-        # first move maria
-        if turn == 0 and j == 2:
-            turn += 1
-            for i in nums[:]:
-                if i % j == 0:
-                    nums.remove(i)
-        elif turn == 0 and j > 2:
-            # marias turn
-            if j % 2 != 0:
-                for i in nums[:]:
-                    if i % j == 0:
-                        nums.remove(i)
-                        turn += 1
-        elif turn == 1:
-            # bens turn
-            if j % 2 != 0:
-                for i in nums[:]:
-                    if i % j == 0:
-                        nums.remove(i)
-                        turn -= 1
-    if turn == 0:
-        return 'Ben'
-    if turn == 1:
-        return 'Maria'
+    a = [1 for x in range(sorted(nums)[-1] + 1)]
+    a[0], a[1] = 0, 0
+    for i in range(2, len(a)):
+        rm_multiples(a, i)
+
+    for i in nums:
+        if sum(a[0:i + 1]) % 2 == 0:
+            ben += 1
+        else:
+            maria += 1
+    if ben > maria:
+        return "Ben"
+    if maria > ben:
+        return "Maria"
+    return None
+
+
+def rm_multiples(ls, x):
+    """removes multiple
+    of primes
+    """
+    for i in range(2, len(ls)):
+        try:
+            ls[i * x] = 0
+        except (ValueError, IndexError):
+            break
